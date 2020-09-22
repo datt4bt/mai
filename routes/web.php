@@ -31,13 +31,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('delete/{id}',[UserController::class,'delete'])->name('delete');
     });
 //Category
-    Route::group(['prefix' => 'category','as'=>'category.'], function() {
-        Route::get('',[CategoryController::class,'getAll'])->name('getAll');
-        Route::get('insert',[CategoryController::class,'insert'])->name('insert');
-        Route::post('processInsert',[CategoryController::class,'processInsert'])->name('processInsert');
-        Route::get('update/{id}',[CategoryController::class,'update'])->name('update');
-        Route::get('processUpdate/{id}',[CategoryController::class,'processUpdate'])->name('processUpdate');
-        Route::get('delete/{id}',[CategoryController::class,'delete'])->name('delete');
-        });
+    Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+        Route::get('', [CategoryController::class, 'getAll'])->name('getAll');
+        Route::get('insert', [CategoryController::class, 'insert'])->name('insert');
+        Route::post('processInsert', [CategoryController::class, 'processInsert'])->name('processInsert');
+        Route::get('update/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::get('processUpdate/{id}', [CategoryController::class, 'processUpdate'])->name('processUpdate');
+        Route::delete('delete', [CategoryController::class, 'delete'])->name('delete');
+    });
 
 });

@@ -1,11 +1,10 @@
 <?php
-namespace App\Repositories\Category;
+namespace App\Repositories\User;
 
 use App\Repositories\EloquentRepository;
-use Exception;
 use Illuminate\Support\Carbon;
 use App\Repositories\Category\CategoryRepositoryInterface;
-class CategoryRepository extends EloquentRepository implements CategoryRepositoryInterface
+class UserRepository extends EloquentRepository implements UserRepositoryInterface
 {
     /**
      * get model
@@ -13,7 +12,7 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
      */
     public function getModel()
     {
-        return \App\Models\Category::class;
+        return \App\Models\Users::class;
     }
 
     /**
@@ -28,31 +27,17 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
     {
         return $this->_model->find($id);
     }
-    public function findOrFail($id)
-    {
-        return $this->_model->findOrFail($id);
-    }
     public function create($data)
     {
         return $this->_model->create($data);
     }
     public function update($data,$id)
     {
-        try
-        {
-            return  $this->_model->findOrFail($id)->update($data);
-        }
-        catch(Exception $e)
-        {
-
-        }
-
+        return  $this->find($id)->update($data);
     }
-
     public function delete($id)
     {
-
-        return $this->find($id)->delete();
+        return   $this->find($id)->delete();
     }
 
 }

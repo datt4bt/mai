@@ -141,7 +141,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../do_an2/bkacad" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -165,7 +165,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1600742312354</updated>
-      <workItem from="1600742313396" duration="12197000" />
+      <workItem from="1600742313396" duration="27827000" />
     </task>
     <servers />
   </component>
@@ -173,22 +173,26 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1492" height="217" key="GridCell.Tab.0.bottom" timestamp="1600743545071">
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1600757802570">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1492" height="217" key="GridCell.Tab.0.bottom/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600743545071" />
-    <state width="1492" height="217" key="GridCell.Tab.0.center" timestamp="1600743545071">
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600757802570" />
+    <state width="1492" height="217" key="GridCell.Tab.0.bottom" timestamp="1600773705676">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1492" height="217" key="GridCell.Tab.0.center/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600743545071" />
-    <state width="1492" height="217" key="GridCell.Tab.0.left" timestamp="1600743545071">
+    <state width="1492" height="217" key="GridCell.Tab.0.bottom/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600773705676" />
+    <state width="1492" height="217" key="GridCell.Tab.0.center" timestamp="1600773705676">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1492" height="217" key="GridCell.Tab.0.left/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600743545071" />
-    <state width="1492" height="217" key="GridCell.Tab.0.right" timestamp="1600743545071">
+    <state width="1492" height="217" key="GridCell.Tab.0.center/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600773705676" />
+    <state width="1492" height="217" key="GridCell.Tab.0.left" timestamp="1600773705676">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1492" height="217" key="GridCell.Tab.0.right/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600743545071" />
+    <state width="1492" height="217" key="GridCell.Tab.0.left/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600773705676" />
+    <state width="1492" height="217" key="GridCell.Tab.0.right" timestamp="1600773705676">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1492" height="217" key="GridCell.Tab.0.right/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1600773705676" />
     <state x="604" y="352" key="NewPhpFileDialog" timestamp="1600747147409">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

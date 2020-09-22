@@ -40,10 +40,12 @@ class CategoryController extends Controller
 
         return view('category.viewAll', compact('arrayCategory'));
     }
+
     public function insert()
     {
         return view('category.insert');
     }
+
     public function processInsert(CategoryStoreRequest $request)
     {
         $data = $request->all();
@@ -54,14 +56,17 @@ class CategoryController extends Controller
 
         return redirect()->route('category.getAll');
     }
+
     public function update($id)
     {
         $category = $this->categoryRepository->find($id);
 
         return view('category.update', compact('category'));
     }
-    public function processUpdate(CategoryStoreRequest $request,$id)
-    {  $data = $request->all();
+
+    public function processUpdate(CategoryStoreRequest $request, $id)
+    {
+        $data = $request->all();
 
         //... Validation here
 
@@ -69,10 +74,19 @@ class CategoryController extends Controller
 
         return redirect()->route('category.getAll');
     }
-    public function delete($id)
-    {
-      $this->categoryRepository->delete($id);
 
-      return redirect()->route('category.getAll');
+    public function delete(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $category = $this->categoryRepository->findOrFail($id);
+
+        } catch (\Exception $e) {
+            return response()->json(["success" => false, 'message' => $e->getMessage()], 400);
+        }
+        $category->delete();
+        return response()->json(['success' => '']);
+
+
     }
 }

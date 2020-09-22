@@ -40,19 +40,21 @@ class UserController extends Controller
 
         return view('user.viewAll', compact('arrayUser'));
     }
+
     public function insert()
     {
         return view('user.insert');
     }
+
     public function processInsert(Request $request)
     {
-        $name=$request->name;
-        $email=$request->username;
-        $password=Hash::make($request->password);
-
+        $name = $request->name;
+        $email = $request->username;
+        $password = Hash::make($request->password);
+        $data = $request->all();
         //... Validation here
 
-        $this->userRepository->create($name,$email,$password);
+        $this->userRepository->create($name, $email, $password);
 
         return redirect()->route('user.getAll');
     }
