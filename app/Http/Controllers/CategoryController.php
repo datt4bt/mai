@@ -51,10 +51,10 @@ class CategoryController extends Controller
         $data = $request->all();
 
         //... Validation here
-
-        $this->categoryRepository->create($data);
-
-        return redirect()->route('category.getAll');
+        $arrayCategory = $this->categoryRepository->getMaxId();
+        $id=$this->categoryRepository->create($data);
+        return response()->json(['success' => true,'message'=>$id]);
+        //return redirect()->route('category.getAll');
     }
 
     public function update($id)

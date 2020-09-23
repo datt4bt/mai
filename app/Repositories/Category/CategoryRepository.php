@@ -24,6 +24,10 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
     {
         return $this->_model::all();
     }
+    public function getMaxId()
+    {
+        return $this->_model::max('id');
+    }
     public function find($id)
     {
         return $this->_model->find($id);

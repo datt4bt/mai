@@ -46,7 +46,7 @@
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">User</a>
+                                <a class="nav-link" href="{{ route('user.getAll') }}">User</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('category.getAll') }}">Category</a>

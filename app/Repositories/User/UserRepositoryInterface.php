@@ -1,7 +1,7 @@
 <?php
-namespace App\Repositories\Category;
+namespace App\Repositories\User;
 
-interface CategoryRepositoryInterface
+interface UserRepositoryInterface
 {
     /**
      * Get 5 posts hot in a month the last

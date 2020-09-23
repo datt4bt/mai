@@ -8,6 +8,8 @@ use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\InsertUserRequest;
 use Session;
 
 class UserController extends Controller
@@ -46,37 +48,39 @@ class UserController extends Controller
         return view('user.insert');
     }
 
-    public function processInsert(Request $request)
+    public function processInsert(InsertUserRequest $request)
     {
-        $name = $request->name;
-        $email = $request->username;
-        $password = Hash::make($request->password);
         $data = $request->all();
-        //... Validation here
-
-        $this->userRepository->create($name, $email, $password);
-
+        $password=Hash::make($request->password);
+        $data['password']= $password;
+        $this->userRepository->create($data);
         return redirect()->route('user.getAll');
     }
+
     public function update($id)
     {
         $user = $this->userRepository->find($id);
-
         return view('user.update', compact('user'));
     }
-    public function processUpdate(Request $request,$id)
-    {  $data = $request->all();
 
-        //... Validation here
+    public function processUpdate(UserStoreRequest $request,$id)
+    {
+        try {
+            $oldPassword=Hash::make($request->oldPassword);
+            $this->userRepository->checkPassword($id, oldPassword);
 
+        } catch (\Exception $e) {
+            return redirect()->route('user.update', ['id'=>$id])->with('error_password','Old Password Error');
+        }
+        $data = $request->all();
+        $validated = $request->validated();
         $this->userRepository->update($id, $data);
-
         return redirect()->route('user.getAll');
     }
+
     public function delete($id)
     {
       $this->userRepository->delete($id);
-
       return redirect()->route('user.getAll');
     }
 }

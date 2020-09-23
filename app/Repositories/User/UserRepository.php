@@ -3,7 +3,7 @@ namespace App\Repositories\User;
 
 use App\Repositories\EloquentRepository;
 use Illuminate\Support\Carbon;
-use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 class UserRepository extends EloquentRepository implements UserRepositoryInterface
 {
     /**
@@ -12,7 +12,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
      */
     public function getModel()
     {
-        return \App\Models\Users::class;
+        return \App\Models\User::class;
     }
 
     /**
@@ -26,6 +26,10 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     public function find($id)
     {
         return $this->_model->find($id);
+    }
+    public function checkPassword($id,$oldPassword)
+    {
+        return $this->_model->where('id',$id)->where('password',$oldPassword);
     }
     public function create($data)
     {
