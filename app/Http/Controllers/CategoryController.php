@@ -9,7 +9,7 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
-use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\Category\CategoryStoreRequest;
 use Validator;
 class CategoryController extends Controller
 {
@@ -53,8 +53,8 @@ class CategoryController extends Controller
         //... Validation here
         $arrayCategory = $this->categoryRepository->getMaxId();
         $id=$this->categoryRepository->create($data);
-        return response()->json(['success' => true,'message'=>$id]);
-        //return redirect()->route('category.getAll');
+        //return response()->json(['success' => true,'message'=>$id]);
+        return redirect()->route('category.getAll');
     }
 
     public function update($id)
@@ -66,12 +66,12 @@ class CategoryController extends Controller
 
     public function processUpdate(CategoryStoreRequest $request, $id)
     {
+        //... Validation here
+        $request->validated();
         $data = $request->all();
 
-        //... Validation here
-
         $this->categoryRepository->update($id, $data);
-
+        //Category::where('id',$id)->update($data);
         return redirect()->route('category.getAll');
     }
 

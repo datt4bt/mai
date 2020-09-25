@@ -13,21 +13,22 @@ class Task extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('task', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
+            $table->string('name',100)->unique();
             $table->text('description');
-            $table->integer('id_user')->unsigned();
+            $table->bigInteger('id_user')->unsigned();
             $table->integer('id_category')->unsigned();
+            $table->boolean('status')->default(0);
             $table->foreign('id_user')
-            ->references('id')->on('user')
+            ->references('id')->on('users')
             ->onDelete('cascade');
             $table->foreign('id_category')
             ->references('id')->on('category')
             ->onDelete('cascade');
         });
-        
+
     }
 
     /**

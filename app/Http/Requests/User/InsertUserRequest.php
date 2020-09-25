@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryStoreRequest extends FormRequest
+class InsertUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class CategoryStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'email' => 'required|unique:users',
             'name' => 'required',
+            'password' => 'required',
+
 
         ];
     }
@@ -32,7 +35,10 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
 
-            'required' => 'Name is required!',
+            'email.required' => 'Email is required!',
+            'email.unique' => 'Email already exists!',
+            'name.required' => 'Name is required!',
+            'password.required' => 'Password is required!',
 
         ];
     }

@@ -1,4 +1,3 @@
-
 @extends('index')
 @section('content')
     <a href="{{ route('category.insert') }}">Add Category</a>
@@ -21,7 +20,7 @@
             </tr>
 
         @endforeach
-        <tr id="info" ></tr>
+
 
     </table>
 

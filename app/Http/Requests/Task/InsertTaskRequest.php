@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InsertUserRequest extends FormRequest
+class InsertTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,18 @@ class InsertUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|unique:users',
-            'name' => 'required',
-            'password' => 'required',
-
-
+            'name' => 'required|unique:task',
+            'description' => 'required',
+            'idCategory' => 'unique:task',
         ];
     }
     public function messages()
     {
         return [
-
-            'email.required' => 'Email is required!',
-            'email.unique' => 'Email already exists!',
             'name.required' => 'Name is required!',
-            'password.required' => 'Password is required!',
-
+            'name.unique' => 'Name already exists!',
+            'description.required' => 'Description is required!',
+            'idCategory.unique' => 'Category already exists!',
         ];
     }
 }

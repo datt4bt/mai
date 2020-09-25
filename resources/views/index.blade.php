@@ -51,6 +51,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('category.getAll') }}">Category</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('task.getAll') }}">Task</a>
+                            </li>
 
 
                         </ul>

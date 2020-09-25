@@ -27,6 +27,10 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     {
         return $this->_model->find($id);
     }
+    public function findOrFail($id)
+    {
+        return $this->_model->findOrFail($id);
+    }
     public function checkPassword($id,$oldPassword)
     {
         return $this->_model->where('id',$id)->where('password',$oldPassword);
@@ -35,7 +39,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     {
         return $this->_model->create($data);
     }
-    public function update($data,$id)
+    public function update($id,$data)
     {
         return  $this->find($id)->update($data);
     }

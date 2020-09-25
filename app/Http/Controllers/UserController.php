@@ -8,8 +8,8 @@ use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\InsertUserRequest;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\InsertUserRequest;
 use Session;
 
 class UserController extends Controller
@@ -67,20 +67,35 @@ class UserController extends Controller
     {
         try {
             $oldPassword=Hash::make($request->oldPassword);
-            $this->userRepository->checkPassword($id, oldPassword);
+            $this->userRepository->checkPassword($id,$oldPassword);
 
         } catch (\Exception $e) {
-            return redirect()->route('user.update', ['id'=>$id])->with('error_password','Old Password Error');
+            return redirect()->route('user.update', ['id'=>$id])->with('error_password','Old Password Incorrect');
         }
-        $data = $request->all();
         $validated = $request->validated();
+
+        $data['name']=$request->name;
+
+        $newPassword=Hash::make($request->newPassword);
+        $data['password']= $newPassword;
+
         $this->userRepository->update($id, $data);
+
         return redirect()->route('user.getAll');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-      $this->userRepository->delete($id);
-      return redirect()->route('user.getAll');
+        try {
+            $id = $request->id;
+            $user = $this->userRepository->findOrFail($id);
+
+        } catch (\Exception $e) {
+            return response()->json(["success" => false, 'message' => $e->getMessage()], 400);
+        }
+        $user->delete();
+        return response()->json(['success' => '']);
+
+
     }
 }

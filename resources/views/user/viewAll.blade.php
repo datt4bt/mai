@@ -1,25 +1,28 @@
 @extends('index')
 @section('content')
     <a href="{{ route('user.insert') }}">Add User</a>
-    <table class="table">
+    <table id="table" class="table">
         <tr>
             <td>Id</td>
             <td>Username</td>
-
             <td></td>
             <td></td>
         </tr>
 
         @foreach($arrayUser as $user)
-            <tr>
+            <tr data-id="{{ $user->id }}">
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->email }}</td>
                 <td><a href="{{ route('user.update', ['id'=>$user->id]) }}">Update</a></td>
-                <td><a href="{{ route('user.delete', ['id'=>$user->id]) }}">Delete</a></td>
+                <td><a  id="{{ $user->id }}" class="delete" href="#">Delete</a></td>
             </tr>
         @endforeach
 
     </table>
 
 @endsection
+@push('js')
+
+    <script src="{{ asset('js/user/delete.js') }}"></script>
+@endpush
 

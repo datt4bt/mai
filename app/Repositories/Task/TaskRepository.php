@@ -1,11 +1,11 @@
 <?php
-namespace App\Repositories\Category;
+namespace App\Repositories\Task;
 
 use App\Repositories\EloquentRepository;
 use Exception;
 use Illuminate\Support\Carbon;
-use App\Repositories\Category\CategoryRepositoryInterface;
-class CategoryRepository extends EloquentRepository implements CategoryRepositoryInterface
+use App\Repositories\Task\TaskRepositoryInterface;
+class TaskRepository extends EloquentRepository implements TaskRepositoryInterface
 {
     /**
      * get model
@@ -13,7 +13,7 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
      */
     public function getModel()
     {
-        return \App\Models\Category::class;
+        return \App\Models\Task::class;
     }
 
     /**
@@ -22,7 +22,7 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
      */
     public function getAll()
     {
-        return $this->_model::all();
+        return $this->_model::with('user')->with('category')->where('id_user',$id)->get();
     }
     public function getMaxId()
     {
@@ -32,9 +32,17 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
     {
         return $this->_model->find($id);
     }
+    public function getOne($id)
+    {
+        return $this->_model::with('user')->with('category')->where('id_user',$id)->get();
+    }
     public function findOrFail($id)
     {
         return $this->_model->findOrFail($id);
+    }
+    public function check($idUser,$idCategory)
+    {
+        return $this->_model->where('id_user',$idUser)->where('id_category',$idCategory)->firstOrFail();
     }
     public function create($data)
     {
