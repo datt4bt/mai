@@ -11,9 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d168b4-d5e1-4bd0-bfa4-815ef9f5fe9d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Providers/DIserviceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/DIserviceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/DIserviceProvider.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +219,7 @@
       <workItem from="1601008958797" duration="18586000" />
       <workItem from="1601261139432" duration="22079000" />
       <workItem from="1601348939852" duration="404000" />
-      <workItem from="1601433562653" duration="24858000" />
+      <workItem from="1601433562653" duration="24916000" />
     </task>
     <servers />
   </component>
