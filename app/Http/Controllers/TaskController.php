@@ -11,6 +11,7 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Task\TaskRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Http\Requests\Task\TaskStoreRequest;
@@ -46,7 +47,29 @@ class TaskController extends Controller
     public function getAll()
     {
         $id = Auth::id();
+
         $arrayTask = $this->taskRepository->getOne($id);
+        if(isset($_GET['page']))
+        {
+            $page=$_GET['page'];
+            return view('task.viewAll', compact('arrayTask','page'));
+        }
+
+
+        return view('task.viewAll', compact('arrayTask'));
+    }
+    public function getAllDelete()
+    {
+        $id = Auth::id();
+
+        $arrayTask = $this->taskRepository->getOneDelete($id);
+        if(isset($_GET['page']))
+        {
+            $page=$_GET['page'];
+            return view('task.viewAll', compact('arrayTask','page'));
+        }
+
+
         return view('task.viewAll', compact('arrayTask'));
     }
 
@@ -99,6 +122,24 @@ class TaskController extends Controller
 
         $this->taskRepository->update($id, $data);
         return response()->json(['success' => '']);
+    }
+    public function updateStatusAll(Request $request)
+    {
+
+        if(isset($request->page))
+        {
+            $currentPage = $request->page;
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($currentPage)
+        {
+            return $currentPage;
+        });
+        }
+        $data=$request->check;
+        $ids=$request->ids;
+        $this->taskRepository->updateStatus($ids,$data);
+       return redirect()->route('task.getAll');
+
+
     }
 
     public function delete(Request $request)

@@ -27,6 +27,7 @@ class Task extends Migration
             $table->foreign('id_category')
             ->references('id')->on('category')
             ->onDelete('cascade');
+            $table->softDeletes();
         });
 
     }
@@ -38,6 +39,8 @@ class Task extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('task', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

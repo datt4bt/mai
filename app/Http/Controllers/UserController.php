@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CustomException;
+use App\Exceptions\RenderException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\InsertUserRequest;
 use Session;
-
+use App\Http\Resources\Users as UserResource;
+use Dingo\Api\Routing\Helpers;
+use Hash;
+use App\Http\Resources\UserCollection;
 class UserController extends Controller
 {
+    use Helpers;
     /**
      * Show the profile for the given user.
      *
@@ -25,6 +30,7 @@ class UserController extends Controller
      * @var userRepositoryInterface|\App\Repositories\Repository
      */
     protected $userRepository;
+
 
     public function __construct(UserRepository $userRepository)
     {
@@ -38,9 +44,16 @@ class UserController extends Controller
      */
     public function getAll()
     {
-        $arrayUser = $this->userRepository->getAll();
+        $users = $this->userRepository->getAll();
+        return  UserResource::collection($users);
 
-        return view('user.viewAll', compact('arrayUser'));
+    }
+    public function getOne($id)
+    {
+        //$id = Auth::id();
+        $user = $this->userRepository->getOne($id);
+        return  UserResource::collection($user);
+
     }
 
     public function insert()
@@ -53,8 +66,8 @@ class UserController extends Controller
         $data = $request->all();
         $password=Hash::make($request->password);
         $data['password']= $password;
-        $this->userRepository->create($data);
-        return redirect()->route('user.getAll');
+        $user=$this->userRepository->create($data);
+        return  new UserResource($user);
     }
 
     public function update($id)
@@ -65,37 +78,31 @@ class UserController extends Controller
 
     public function processUpdate(UserStoreRequest $request,$id)
     {
-        try {
-            $oldPassword=Hash::make($request->oldPassword);
-            $this->userRepository->checkPassword($id,$oldPassword);
-
-        } catch (\Exception $e) {
-            return redirect()->route('user.update', ['id'=>$id])->with('error_password','Old Password Incorrect');
-        }
         $validated = $request->validated();
-
         $data['name']=$request->name;
+        $data['password']=Hash::make($request->password);
+        $user= $this->userRepository->update($id,$data);
+        return new  UserResource($user);
 
-        $newPassword=Hash::make($request->newPassword);
-        $data['password']= $newPassword;
-
-        $this->userRepository->update($id, $data);
-
-        return redirect()->route('user.getAll');
     }
 
-    public function delete(Request $request)
+//    public function deleteAJ(Request $request)
+//    {
+//        try {
+//            $id = $request->id;
+//            $user = $this->userRepository->findOrFail($id);
+//
+//        } catch (\Exception $e) {
+//            return response()->json(["success" => false, 'message' => $e->getMessage()], 400);
+//        }
+//        $user->delete();
+//        return response()->json(['success' => '']);
+//
+//
+//    }
+    public function delete($id)
     {
-        try {
-            $id = $request->id;
-            $user = $this->userRepository->findOrFail($id);
-
-        } catch (\Exception $e) {
-            return response()->json(["success" => false, 'message' => $e->getMessage()], 400);
-        }
-        $user->delete();
-        return response()->json(['success' => '']);
-
-
+        $user = $this->userRepository->delete($id);
+        return new  UserResource($user);
     }
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Api\UserController;
+use App\Http\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function ($api) {
+    $api->get('viewLogin', [UserController::class,'viewLogin']);
+    $api->post('login', [UserController::class,'login'])->name('login');
+    $api->group(['middleware' => 'jwt.auth'], function ($api) {
+        $api->get('user-info',  [UserController::class,'getUserInfo']);
+        $api->group(['prefix' => 'user','as'=>'user.'], function($api) {
+            $api->get('/',  [UserController::class,'getAll']);
+            $api->get('/{id}',  [UserController::class,'show']);
+            $api->post('update/{id}',  [UserController::class,'update']);
+            $api->get('delete/{id}',  [UserController::class,'delete']);
+        });
+    });
 });
-Route::fallback(function(){
-    return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
-});
+
+

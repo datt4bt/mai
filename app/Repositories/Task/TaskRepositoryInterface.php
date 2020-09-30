@@ -9,6 +9,7 @@ interface TaskRepositoryInterface
      */
     public function getAll();
     public function getOne($id);
+    public function checkPassword($id,$dt);
     public function find($id);
     public function create($data);
     public function update($id, $data);

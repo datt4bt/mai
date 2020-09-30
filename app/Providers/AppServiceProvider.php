@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\Task;
+use App\Observers\TaskObserver;
+use Illuminate\Support\Facades\Schema; // add
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191); // add: default varchar(191)
+        Task::observe(TaskObserver::class);
     }
 }

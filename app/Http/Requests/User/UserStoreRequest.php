@@ -25,8 +25,8 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'oldPassword' => 'required',
-            'newPassword' => 'required',
+            'password' => 'required',
+
 
         ];
     }
@@ -35,8 +35,8 @@ class UserStoreRequest extends FormRequest
         return [
 
             'name.required' => 'Name is required!',
-            'oldPassword.required' => 'Old Password is required!',
-            'newPassword.required' => 'New Password is required!',
+            'password.required' => 'Password is required!',
+
 
         ];
     }

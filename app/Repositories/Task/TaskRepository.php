@@ -22,7 +22,7 @@ class TaskRepository extends EloquentRepository implements TaskRepositoryInterfa
      */
     public function getAll()
     {
-        return $this->_model::with('user')->with('category')->where('id_user',$id)->get();
+        return $this->_model->all();
     }
     public function getMaxId()
     {
@@ -34,7 +34,11 @@ class TaskRepository extends EloquentRepository implements TaskRepositoryInterfa
     }
     public function getOne($id)
     {
-        return $this->_model::with('user')->with('category')->where('id_user',$id)->get();
+        return $this->_model::with('user')->with('category')->where('id_user',$id)->paginate(5);
+    }
+    public function getOneDelete($id)
+    {
+        return $this->_model::withTrashed()->with('user')->with('category')->where('id_user',$id)->paginate(5);
     }
     public function findOrFail($id)
     {
@@ -51,6 +55,24 @@ class TaskRepository extends EloquentRepository implements TaskRepositoryInterfa
     public function update($id,$data)
     {
         return  $this->find($id)->update($data);
+    }
+    public function updateStatus( $ids,$data)
+    {
+        $array = [];
+        foreach ($ids as $id) {
+            $status=in_array($id, $data);
+
+              array_push($array, [
+                  'id' => $id,
+                  'status' => $status
+              ]);
+        }
+        foreach ($array as $task)
+        {
+            $id=$task['id'];
+            $data['status']=$task['status'];
+            $this->findOrFail($id)->update($data);
+        }
     }
 
     public function delete($id)

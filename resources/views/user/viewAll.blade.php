@@ -6,7 +6,7 @@
             <td>Id</td>
             <td>Username</td>
             <td></td>
-            <td></td>
+
         </tr>
 
         @foreach($arrayUser as $user)
@@ -14,7 +14,7 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->email }}</td>
                 <td><a href="{{ route('user.update', ['id'=>$user->id]) }}">Update</a></td>
-                <td><a  id="{{ $user->id }}" class="delete" href="#">Delete</a></td>
+
             </tr>
         @endforeach
 

@@ -16,7 +16,6 @@ use App\Http\Middleware\CheckUser;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,8 +28,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('insert',[UserController::class,'insert'])->name('insert');
         Route::post('processInsert',[UserController::class,'processInsert'])->name('processInsert');
         Route::get('update/{id}',[UserController::class,'update'])->name('update');
-        Route::get('processUpdate/{id}',[UserController::class,'processUpdate'])->name('processUpdate');
-        Route::delete('delete',[UserController::class,'delete'])->name('delete');
+        Route::post('processUpdate/{id}',[UserController::class,'processUpdate'])->name('processUpdate');
+       // Route::delete('deleteAJ', [UserController::class, 'deleteAJ'])->name('deleteAJ');
+        Route::get('delete/{id}', [UserController::class, 'delete'])->name('delete');
     });
 //Category
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
@@ -38,8 +38,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('insert', [CategoryController::class, 'insert'])->name('insert');
         Route::post('processInsert', [CategoryController::class, 'processInsert'])->name('processInsert');
         Route::get('update/{id}', [CategoryController::class, 'update'])->name('update');
-        Route::get('processUpdate/{id}', [CategoryController::class, 'processUpdate'])->name('processUpdate');
+        Route::post('processUpdate/{id}', [CategoryController::class, 'processUpdate'])->name('processUpdate');
         Route::delete('delete', [CategoryController::class, 'delete'])->name('delete');
+
     });
     //Task
     Route::group(['prefix' => 'task', 'as' => 'task.'], function () {
@@ -49,6 +50,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('update/{id}', [TaskController::class, 'update'])->name('update')->middleware(CheckUser::class);
         Route::get('processUpdate/{id}', [TaskController::class, 'processUpdate'])->name('processUpdate');
         Route::post('updateStatus', [TaskController::class, 'updateStatus'])->name('updateStatus');
+        Route::get('updateStatusAll', [TaskController::class, 'updateStatusAll'])->name('updateStatusAll');
         Route::delete('delete', [TaskController::class, 'delete'])->name('delete');
     });
 

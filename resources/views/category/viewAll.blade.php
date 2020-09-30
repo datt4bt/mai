@@ -16,7 +16,7 @@
                 <td>{{ $category->name }}</td>
 
                 <td><a  href="{{ route('category.update', ['id'=>$category->id]) }}">Update</a></td>
-                <td><a id="{{$category->id}}" class="delete"  href="#">Delete</a></td>
+                <td><a id="{{$category->id}}" onclick="return confirm('Are you sure you want to delete this item?');" class="delete"  href="#">Delete</a></td>
             </tr>
 
         @endforeach

@@ -29,7 +29,6 @@ $(document).ready(function () {
 
         var id = $(this).attr('id');
         var status = $(this).val();
-
         var token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
             type: "POST",
