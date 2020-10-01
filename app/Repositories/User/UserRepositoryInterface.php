@@ -8,6 +8,7 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function getAll();
+    public function show();
     public function getOne($id);
     public function find($id);
     public function findOrFail($id);

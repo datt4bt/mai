@@ -8,9 +8,10 @@ interface TaskRepositoryInterface
      * @return mixed
      */
     public function getAll();
+    public function show($id);
     public function getOne($id);
-    public function checkPassword($id,$dt);
     public function find($id);
+    public function findUser($id);
     public function create($data);
     public function update($id, $data);
     public function delete($id);

@@ -24,16 +24,16 @@ class CategoryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-
+            'name' => 'required|unique:category',
         ];
     }
+
     public function messages()
     {
         return [
 
-            'required' => 'Name is required!',
-
+            'name.required' => 'Name is required!',
+            'name.unique' => 'Name already exists!',
         ];
     }
 }

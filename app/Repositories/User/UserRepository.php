@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Repositories\User;
+
 use App\Exceptions\RenderException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -7,6 +9,7 @@ use App\Repositories\EloquentRepository;
 use Illuminate\Support\Carbon;
 use App\Repositories\User\UserRepositoryInterface;
 use Exception;
+
 class UserRepository extends EloquentRepository implements UserRepositoryInterface
 {
     /**
@@ -28,18 +31,21 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
         return $this->_model::all();
     }
 
+    public function show()
+    {
+        return $this->_model->withTrashed()->get();
+    }
+
     public function getOne($id)
     {
-        return $this->_model::where('id',$id)->get();
+        return $this->_model::where('id', $id)->get();
     }
 
     public function find($id)
     {
         try {
             $user = $this->_model->findOrFail($id);
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             throw  new  RenderException($exception->getMessage());
         }
         return $user;
@@ -55,9 +61,9 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
         return $this->_model->create($data);
     }
 
-    public function update($id,$data)
+    public function update($id, $data)
     {
-        $model = $this->findOrFail($id);
+        $model = $this->find($id);
         $model->fill($data);
         $model->save();
         return $model;
@@ -65,9 +71,7 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
 
     public function delete($id)
     {
-        $model= $this->find($id);
-        $model->delete();
-        return  $model;
+        return $this->find($id)->delete();
     }
 
 }

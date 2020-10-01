@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Repositories\Task;
 
+use App\Exceptions\RenderException;
 use App\Repositories\EloquentRepository;
 use Exception;
 use Illuminate\Support\Carbon;
 use App\Repositories\Task\TaskRepositoryInterface;
+
 class TaskRepository extends EloquentRepository implements TaskRepositoryInterface
 {
     /**
@@ -24,53 +27,68 @@ class TaskRepository extends EloquentRepository implements TaskRepositoryInterfa
     {
         return $this->_model->all();
     }
-    public function getMaxId()
-    {
-        return $this->_model::max('id');
-    }
+
     public function find($id)
     {
-        return $this->_model->find($id);
+        try {
+            $task = $this->_model->findOrFail($id);
+        } catch (\Exception $exception) {
+            throw  new  RenderException($exception->getMessage());
+        }
+        return $task;
     }
+    public function findUser($id)
+    {
+        try {
+            $task = $this->_model::where('id_user', $id)->firstOrFail();
+        } catch (\Exception $exception) {
+            throw  new  RenderException($exception->getMessage());
+        }
+        return $task;
+    }
+
     public function getOne($id)
     {
-        return $this->_model::with('user')->with('category')->where('id_user',$id)->paginate(5);
+        return $this->_model::with('user')->with('category')->paginate(5);
     }
-    public function getOneDelete($id)
+
+    public function show($id)
     {
-        return $this->_model::withTrashed()->with('user')->with('category')->where('id_user',$id)->paginate(5);
+        return $this->_model::withTrashed()->with('user')->with('category')->paginate(5);
     }
+
     public function findOrFail($id)
     {
         return $this->_model->findOrFail($id);
     }
-    public function check($idUser,$idCategory)
-    {
-        return $this->_model->where('id_user',$idUser)->where('id_category',$idCategory)->firstOrFail();
-    }
+
     public function create($data)
     {
         return $this->_model->create($data);
     }
-    public function update($id,$data)
+
+    public function update($id, $data)
     {
-        return  $this->find($id)->update($data);
+        $model = $this->find($id);
+        $model->fill($data);
+        $model->save();
+        return $model;
     }
-    public function updateStatus( $ids,$data)
+
+    public function updateStatus($ids, $data)
     {
         $array = [];
         foreach ($ids as $id) {
-            $status=in_array($id, $data);
+            $status = in_array($id, $data);
 
-              array_push($array, [
-                  'id' => $id,
-                  'status' => $status
-              ]);
+            array_push($array, [
+                'id' => $id,
+                'status' => $status
+            ]);
         }
-        foreach ($array as $task)
-        {
-            $id=$task['id'];
-            $data['status']=$task['status'];
+        foreach ($array as $task) {
+            $id = $task['id'];
+            $data['status'] = $task['status'];
             $this->findOrFail($id)->update($data);
         }
     }

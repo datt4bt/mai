@@ -1,4 +1,3 @@
-
 @extends('index')
 @section('content')
 
@@ -18,16 +17,16 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Description</label>
-            <textarea name="description"  cols="70%" rows="5"  required>{{$task->description}}</textarea>
+            <textarea name="description" cols="70%" rows="5" required>{{$task->description}}</textarea>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Category</label>
             <select name="id_category" class="custom-select">
-                @foreach($arrayCategory as $category)
+                @foreach($categorys as $category)
                     <option value="{{$category->id}}"
-                    @if ($task->id_category==$category->id)
-                        selected
-                    @endif
+                            @if ($task->id_category==$category->id)
+                            selected
+                        @endif
 
                     >{{$category->name}}</option>
 

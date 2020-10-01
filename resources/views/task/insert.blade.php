@@ -1,11 +1,10 @@
-
 @extends('index')
 @section('content')
 
     @if (Session::has('error_insert'))
         <div class="alert alert-danger">
             <ul>
-               {{Session::get('error_insert')}}
+                {{Session::get('error_insert')}}
             </ul>
         </div>
     @endif
@@ -28,12 +27,12 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Description</label>
-            <textarea name="description"  cols="70%" rows="5"  required></textarea>
+            <textarea name="description" cols="70%" rows="5" required></textarea>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Category</label>
             <select name="id_category" class="custom-select">
-                @foreach($arrayCategory as $category)
+                @foreach($categorys as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
 
                 @endforeach

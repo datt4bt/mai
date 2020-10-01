@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -10,13 +11,15 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Hash;
 use App\Transformers\UserTransformer;
 use Dingo\Api\Routing\Helpers;
+
 class UserController extends Controller
 {
     use Helpers;
+
     /**
      * Show the profile for the given user.
      *
-     * @param  int  $id
+     * @param int $id
      * @return View
      */
 
@@ -36,45 +39,57 @@ class UserController extends Controller
         $this->userTransformer = $userTransformer;
 
     }
+
     /**
      * Show all post
      *
      * @return \Illuminate\Http\Response
      */
-    public function viewLogin(){
+    public function viewLogin()
+    {
 
         return view('login');
 
     }
-    public function login(Request $request){
+
+    public function login(Request $request)
+    {
         $credentials = $request->only('email', 'password');
         $token = null;
-        return $this->userRepository->login($token,$credentials);
+        return $this->userRepository->login($token, $credentials);
 
     }
-    public function getAll(){
 
-        $user=$this->userRepository->getAll();
+    public function getAll()
+    {
+
+        $user = $this->userRepository->getAll();
         return $this->response->collection($user, new UserTransformer);
     }
-    public function getUserInfo(Request $request){
+
+    public function getUserInfo(Request $request)
+    {
         $userRepository = JWTAuth::toUser($request->token);
         return response()->json(['result' => $userRepository]);
     }
-    public function show($id){
-        $user=$this->userRepository->find($id);
+
+    public function show($id)
+    {
+        $user = $this->userRepository->find($id);
 
         return $this->response->item($user, new UserTransformer);
     }
-    public function update($id ,Request $request){
-        $data=$request->all();
-        $password=Hash::make($request->password);
-        $data['password']= $password;
-        $user=$this->userRepository->update($id,$data);
+
+    public function update($id, Request $request)
+    {
+        $data = $request->all();
+        $user = $this->userRepository->update($id, $data);
         return $this->response->item($user, new UserTransformer);
     }
-    public function delete($id){
-        $user=$this->userRepository->delete($id);
+
+    public function delete($id)
+    {
+        $user = $this->userRepository->delete($id);
         return response()->json(['result' => $user]);
     }
 }

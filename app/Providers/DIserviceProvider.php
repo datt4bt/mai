@@ -3,7 +3,7 @@
 namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
-class DIserviceProvider extends ServiceProvider
+class DiServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.

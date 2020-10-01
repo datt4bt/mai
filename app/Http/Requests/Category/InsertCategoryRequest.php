@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class InsertCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,16 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:category',
         ];
     }
+
     public function messages()
     {
         return [
-            'name.required' => 'Name is required!',
 
+            'name.required' => 'Name is required!',
+            'name.unique' => 'Name already exists!',
         ];
     }
 }

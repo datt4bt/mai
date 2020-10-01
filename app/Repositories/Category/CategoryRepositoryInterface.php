@@ -8,6 +8,7 @@ interface CategoryRepositoryInterface
      * @return mixed
      */
     public function getAll();
+    public function show();
     public function find($id);
     public function create($data);
     public function update($id, $data);

@@ -15,18 +15,20 @@ use Session;
 use App\Http\Resources\Users as UserResource;
 use Dingo\Api\Routing\Helpers;
 use Hash;
-use App\Http\Resources\UserCollection;
+
+
 class UserController extends Controller
 {
     use Helpers;
+
     /**
      * Show the profile for the given user.
      *
-     * @param  int  $id
+     * @param int $id
      * @return View
      */
 
-         /**
+    /**
      * @var userRepositoryInterface|\App\Repositories\Repository
      */
     protected $userRepository;
@@ -37,6 +39,7 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
 
     }
+
     /**
      * Show all post
      *
@@ -45,14 +48,21 @@ class UserController extends Controller
     public function getAll()
     {
         $users = $this->userRepository->getAll();
-        return  UserResource::collection($users);
+        return UserResource::collection($users);
 
     }
+
+    public function show()
+    {
+        $user = $this->userRepository->show();
+        return UserResource::collection($user);
+    }
+
     public function getOne($id)
     {
         //$id = Auth::id();
         $user = $this->userRepository->getOne($id);
-        return  UserResource::collection($user);
+        return UserResource::collection($user);
 
     }
 
@@ -64,10 +74,10 @@ class UserController extends Controller
     public function processInsert(InsertUserRequest $request)
     {
         $data = $request->all();
-        $password=Hash::make($request->password);
-        $data['password']= $password;
-        $user=$this->userRepository->create($data);
-        return  new UserResource($user);
+        $password = Hash::make($request->password);
+        $data['password'] = $password;
+        $user = $this->userRepository->create($data);
+        return new UserResource($user);
     }
 
     public function update($id)
@@ -76,12 +86,14 @@ class UserController extends Controller
         return view('user.update', compact('user'));
     }
 
-    public function processUpdate(UserStoreRequest $request,$id)
+    public function processUpdate(UserStoreRequest $request, $id)
     {
         $validated = $request->validated();
-        $data['name']=$request->name;
-        $data['password']=Hash::make($request->password);
-        $user= $this->userRepository->update($id,$data);
+        $data['name'] = $request->name;
+        if ($request->password != null) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $user = $this->userRepository->update($id, $data);
         return new  UserResource($user);
 
     }
@@ -103,6 +115,6 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = $this->userRepository->delete($id);
-        return new  UserResource($user);
+        return response()->json(['result' => $user]);
     }
 }
