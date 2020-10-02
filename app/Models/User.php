@@ -60,8 +60,4 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-    public function task()
-    {
-        return $this->hasMany('App\Models\Task');
-    }
 }

@@ -13,8 +13,8 @@ class DiServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Repositories\Category\CategoryRepositoryInterface::class,
-            \App\Repositories\Category\CategoryRepository::class,
+            \App\Repositories\Product\ProductRepositoryInterface::class,
+            \App\Repositories\Product\ProductRepository::class,
 
 
         );
@@ -24,8 +24,8 @@ class DiServiceProvider extends ServiceProvider
 
         );
         $this->app->bind(
-            \App\Repositories\Task\TaskRepositoryInterface::class,
-            \App\Repositories\Task\TaskRepository::class,
+            \App\Repositories\ImageProduct\ImageProductRepositoryInterface::class,
+            \App\Repositories\ImageProduct\ImageProductRepository::class,
 
         );
 

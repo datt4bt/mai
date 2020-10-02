@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Providers;
-use App\Models\Category;
-use App\Models\Task;
+
 use App\Models\User;
 use App\Observers\CategoryObserver;
 use App\Observers\TaskObserver;
@@ -20,7 +19,6 @@ class ObserverProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
-        Task::observe(TaskObserver::class);
-        Category::observe(CategoryObserver::class);
+
     }
 }

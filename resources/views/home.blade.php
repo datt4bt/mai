@@ -1,4 +1,4 @@
-@extends('index')
+@extends('giao_dien_admin.index')
 @section('content')
     <form method="POST" action="{{ route('logout') }}">
         @csrf
@@ -9,5 +9,5 @@
             {{ __('Logout') }}
         </x-jet-dropdown-link>
     </form>
-    <a href="{{ route('category.insert') }}"><button type="button" class="btn btn-primary">Add Category</button></a>
+    <a href="{{ route('product.insert') }}"><button type="button" class="btn btn-primary">Add Product</button></a>
 @endsection
